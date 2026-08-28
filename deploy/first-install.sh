@@ -37,18 +37,24 @@ fi
 
 npm install
 npx prisma migrate deploy
-if [ ! -f prisma/prod.db ]; then
+if [ ! -f prisma/.seeded ]; then
   npm run db:seed
+  touch prisma/.seeded
 fi
 npm run build
 
 install -m 644 deploy/maskofhappiness.service /etc/systemd/system/maskofhappiness.service
+if [ -d /etc/caddy/Caddyfile.d ]; then
+  install -m 644 deploy/caddy-site.caddy /etc/caddy/Caddyfile.d/maskofhappiness.caddy
+fi
 chown -R www-data:www-data "$APP_DIR"
 systemctl daemon-reload
 systemctl enable --now maskofhappiness
+systemctl restart maskofhappiness
+if [ -d /etc/caddy/Caddyfile.d ]; then
+  systemctl reload caddy || true
+fi
 
 echo
-echo "App is on 127.0.0.1:3002. Do not use nginx or certbot --nginx on this box if Caddy already owns port 80."
-echo "Add deploy/caddy-site.caddy to your Caddyfile (or import it), then:"
-echo "  systemctl reload caddy"
+echo "App is on 127.0.0.1:3005. Caddy site file: /etc/caddy/Caddyfile.d/maskofhappiness.caddy"
 echo "Caddy will issue HTTPS for maskofhappiness.com once DNS points here."

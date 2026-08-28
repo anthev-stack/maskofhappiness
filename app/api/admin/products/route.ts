@@ -11,7 +11,7 @@ async function requireAdmin() {
   return session;
 }
 
-function productFields(body: Record<string, unknown>, forCreate = false) {
+function productFields(body: Record<string, unknown>) {
   const title = String(body.title ?? "").trim();
   if (!title) return { error: "Title is required." };
   const variants = normalizeVariants(body.variants);
@@ -31,7 +31,6 @@ function productFields(body: Record<string, unknown>, forCreate = false) {
       category: String(body.category ?? "").trim(),
       productType: String(body.productType ?? "").trim(),
       status,
-      ...(forCreate ? { slug: `${slugify(title)}-${Date.now().toString(36)}` } : {}),
     },
   };
 }
@@ -41,13 +40,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await request.json();
-  const parsed = productFields(body, true);
+  const parsed = productFields(body);
   if ("error" in parsed) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
   const product = await prisma.product.create({
     data: {
       ...parsed.data,
+      slug: `${slugify(parsed.data.title)}-${Date.now().toString(36)}`,
       variants: {
         create: parsed.variants.map((variant, index) => ({
           name: variant.name,

@@ -8,7 +8,7 @@ User=www-data
 Group=www-data
 WorkingDirectory=/var/www/maskofhappiness
 Environment=NODE_ENV=production
-Environment=PORT=3002
+Environment=PORT=3005
 EnvironmentFile=/var/www/maskofhappiness/.env
 ExecStart=/usr/bin/npm run start
 Restart=always

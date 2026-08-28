@@ -1,7 +1,7 @@
 maskofhappiness.com on Vultr
 ============================
 
-This VPS already uses 3000 (Docker) and 3001 (PM2). This site binds to 3002.
+This VPS already uses 3000–3004. This site binds to 3005.
 Port 80/443 is owned by Caddy, not nginx. Do not run certbot --nginx here.
 
 Everyday workflow
