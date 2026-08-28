@@ -1,4 +1,10 @@
 maskofhappiness.com, www.maskofhappiness.com {
 	encode gzip
-	reverse_proxy 127.0.0.1:3005
+	handle /uploads/* {
+		root * /var/www/maskofhappiness/public
+		file_server
+	}
+	handle {
+		reverse_proxy 127.0.0.1:3005
+	}
 }
