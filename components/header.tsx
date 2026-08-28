@@ -33,6 +33,9 @@ export function Header() {
           <Link className={item} href="/tickets" onClick={close}>
             My tickets
           </Link>
+          <Link className={item} href="/account" onClick={close}>
+            Account
+          </Link>
           {session.user.role === "admin" ? (
             <Link className={item} href="/admin" onClick={close}>
               Dashboard
