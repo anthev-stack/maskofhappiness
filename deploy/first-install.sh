@@ -17,11 +17,11 @@ fi
 
 mkdir -p "$APP_DIR"
 if [ ! -d "$APP_DIR/.git" ]; then
-  git clone "$REPO" "$APP_DIR"
+  git -c "safe.directory=$APP_DIR" clone "$REPO" "$APP_DIR"
 else
-  git -C "$APP_DIR" fetch origin
-  git -C "$APP_DIR" checkout main
-  git -C "$APP_DIR" pull --ff-only origin main
+  git -c "safe.directory=$APP_DIR" -C "$APP_DIR" fetch origin
+  git -c "safe.directory=$APP_DIR" -C "$APP_DIR" checkout main
+  git -c "safe.directory=$APP_DIR" -C "$APP_DIR" pull --ff-only origin main
 fi
 
 cd "$APP_DIR"
@@ -47,7 +47,8 @@ install -m 644 deploy/maskofhappiness.service /etc/systemd/system/maskofhappines
 if [ -d /etc/caddy/Caddyfile.d ]; then
   install -m 644 deploy/caddy-site.caddy /etc/caddy/Caddyfile.d/maskofhappiness.caddy
 fi
-chown -R www-data:www-data "$APP_DIR"
+mkdir -p "$APP_DIR/public/uploads"
+chown -R www-data:www-data "$APP_DIR/public/uploads" "$APP_DIR/prisma"
 systemctl daemon-reload
 systemctl enable --now maskofhappiness
 systemctl restart maskofhappiness

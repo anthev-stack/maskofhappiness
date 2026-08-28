@@ -2,8 +2,9 @@
 set -euo pipefail
 APP_DIR="${APP_DIR:-/var/www/maskofhappiness}"
 cd "$APP_DIR"
-git fetch origin
-git pull --ff-only origin main
+GIT=(git -c "safe.directory=$APP_DIR")
+"${GIT[@]}" fetch origin
+"${GIT[@]}" pull --ff-only origin main
 npm install
 npx prisma migrate deploy
 npm run build
