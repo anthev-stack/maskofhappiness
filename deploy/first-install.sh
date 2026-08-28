@@ -8,7 +8,7 @@ REPO="${REPO:-https://github.com/anthev-stack/maskofhappiness.git}"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y nginx git curl ca-certificates certbot python3-certbot-nginx
+apt-get install -y git curl ca-certificates
 
 if ! command -v node >/dev/null 2>&1; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -35,7 +35,7 @@ if [ ! -f .env ]; then
   echo "Wrote $APP_DIR/.env — change ADMIN_PASSWORD before seeding if this is a public server."
 fi
 
-npm ci
+npm install
 npx prisma migrate deploy
 if [ ! -f prisma/prod.db ]; then
   npm run db:seed
@@ -43,15 +43,12 @@ fi
 npm run build
 
 install -m 644 deploy/maskofhappiness.service /etc/systemd/system/maskofhappiness.service
-install -m 644 deploy/nginx.conf /etc/nginx/sites-available/maskofhappiness
-ln -sfn /etc/nginx/sites-available/maskofhappiness /etc/nginx/sites-enabled/maskofhappiness
-rm -f /etc/nginx/sites-enabled/default
-
 chown -R www-data:www-data "$APP_DIR"
-nginx -t
 systemctl daemon-reload
 systemctl enable --now maskofhappiness
-systemctl reload nginx
 
-echo "App listens on 127.0.0.1:3002. Nginx proxies maskofhappiness.com on port 80. Point DNS, then run:"
-echo "  certbot --nginx -d maskofhappiness.com -d www.maskofhappiness.com"
+echo
+echo "App is on 127.0.0.1:3002. Do not use nginx or certbot --nginx on this box if Caddy already owns port 80."
+echo "Add deploy/caddy-site.caddy to your Caddyfile (or import it), then:"
+echo "  systemctl reload caddy"
+echo "Caddy will issue HTTPS for maskofhappiness.com once DNS points here."
