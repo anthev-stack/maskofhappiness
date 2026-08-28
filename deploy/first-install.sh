@@ -53,5 +53,5 @@ systemctl daemon-reload
 systemctl enable --now maskofhappiness
 systemctl reload nginx
 
-echo "Site is proxying on port 80. Point DNS, then run:"
+echo "App listens on 127.0.0.1:3002. Nginx proxies maskofhappiness.com on port 80. Point DNS, then run:"
 echo "  certbot --nginx -d maskofhappiness.com -d www.maskofhappiness.com"

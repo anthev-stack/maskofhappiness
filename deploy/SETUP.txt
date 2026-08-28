@@ -25,5 +25,7 @@ First time on a new Ubuntu VPS
 6. After DNS is live:
      certbot --nginx -d maskofhappiness.com -d www.maskofhappiness.com
 
+This VPS already uses 3000 (Docker) and 3001 (PM2). This site binds to 3002.
+
 The SQLite database and uploaded photos live on the server (prisma/prod.db and
 public/uploads). They are not in git, so do not delete the app folder when updating.
