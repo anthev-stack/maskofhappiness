@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --radius-lg: 0.325rem;
+  --radius-xl: 0.4875rem;
+  --radius-2xl: 0.65rem;
+  --radius-3xl: 0.975rem;
+}
+
+:root {
+  --bg: #080808;
+  --surface-2: #0f0f0f;
+  --surface-3: #151515;
+  --surface-4: #34363c;
+  --heading: #ecf9fb;
+  --muted: #b0bac5;
+  --border: #2c2e33;
+  --brand: #e11d48;
+  --brand-hover: color-mix(in srgb, var(--brand) 78%, white);
+  --brand-soft: color-mix(in srgb, var(--brand) 30%, transparent);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--muted);
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans), Inter, system-ui, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border-radius: 0.4875rem;
+  background: var(--surface-3);
+  color: var(--heading);
+  border: 1px solid var(--border);
+  padding: 0.65rem 0.8rem;
+  outline: none;
+}
+
+input[type="checkbox"],
+input[type="color"],
+input[type="range"] {
+  width: auto;
+}
+
+#door-scanner video,
+#door-scanner canvas {
+  width: 100% !important;
+  min-height: 280px;
+  object-fit: cover;
+}

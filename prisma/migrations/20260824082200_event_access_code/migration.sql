@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Event" ADD COLUMN "accessCodeEnabled" BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE "Event" ADD COLUMN "accessCode" TEXT NOT NULL DEFAULT '';

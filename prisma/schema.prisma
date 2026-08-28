@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("user")
+  createdAt    DateTime @default(now())
+  orders       Order[]
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  location    String
+  startsAt    DateTime
+  endsAt      DateTime?
+  imageUrl    String?
+  priceCents  Int      @default(0)
+  currency    String   @default("AUD")
+  capacity    Int?
+  published   Boolean  @default(true)
+  activated   Boolean  @default(false)
+  accessCodeEnabled Boolean @default(false)
+  accessCode        String  @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+}
+
+model Playlist {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @default("")
+  spotifyUrl  String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  userId      String
+  eventId     String
+  status      String   @default("pending")
+  amountCents Int      @default(0)
+  ticketCode  String   @unique
+  usedAt      DateTime?
+  refundReason       String    @default("")
+  refundRequestedAt  DateTime?
+  refundReviewedAt   DateTime?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Setting {
+  id                    String  @id @default("site")
+  homepageLogoUrl       String?
+  homepageLogoSourceUrl String?
+  accentColor           String  @default("#e11d48")
+  listenTitle           String  @default("Listen with us")
+  listenBlurb           String  @default("The brand is built around sharing and listening. These are the playlists we are on right now.")
+  logoOverlay           String  @default("")
+  logoOverlayUppercase  Boolean @default(false)
+  logoOverlayColor      String  @default("#b0bac5")
+  homepageProductIds    String  @default("[]")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String   @default("")
+  imageUrl    String?
+  priceCents  Int      @default(0)
+  currency    String   @default("AUD")
+  inventory   Int      @default(0)
+  category    String   @default("")
+  productType String   @default("")
+  status      String   @default("active")
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  variants    ProductVariant[]
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  name      String
+  inventory Int     @default(0)
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}

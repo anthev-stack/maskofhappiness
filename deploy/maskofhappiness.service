@@ -1,0 +1,18 @@
+[Unit]
+Description=maskofhappiness Next.js
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/maskofhappiness
+Environment=NODE_ENV=production
+Environment=PORT=3000
+EnvironmentFile=/var/www/maskofhappiness/.env
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

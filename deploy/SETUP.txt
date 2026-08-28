@@ -1,0 +1,29 @@
+maskofhappiness.com on Vultr
+============================
+
+Everyday workflow
+-----------------
+On this PC:
+  git add -A
+  git commit -m "your message"
+  git push origin main
+
+On the VPS (SSH in as root):
+  bash /var/www/maskofhappiness/deploy/update.sh
+
+First time on a new Ubuntu VPS
+------------------------------
+1. Point DNS A records for maskofhappiness.com and www to the VPS IP.
+2. SSH in as root.
+3. git clone https://github.com/anthev-stack/maskofhappiness.git /var/www/maskofhappiness
+   (or clone with a deploy key if the repo is private)
+4. bash /var/www/maskofhappiness/deploy/first-install.sh
+5. Edit /var/www/maskofhappiness/.env if needed. Production values:
+     DATABASE_URL="file:./prod.db"
+     NEXTAUTH_URL="https://maskofhappiness.com"
+     NEXTAUTH_SECRET=<openssl rand -base64 32>
+6. After DNS is live:
+     certbot --nginx -d maskofhappiness.com -d www.maskofhappiness.com
+
+The SQLite database and uploaded photos live on the server (prisma/prod.db and
+public/uploads). They are not in git, so do not delete the app folder when updating.
