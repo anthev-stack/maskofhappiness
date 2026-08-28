@@ -18,10 +18,10 @@ export function Header() {
 
   const links = (
     <>
-      <Link className={item} href="/#events" onClick={close}>
+      <Link className={item} href="/events" onClick={close}>
         Events
       </Link>
-      <Link className={item} href="/#listen" onClick={close}>
+      <Link className={item} href="/listen" onClick={close}>
         Listen
       </Link>
       <Link className={item} href="/shop" onClick={close}>

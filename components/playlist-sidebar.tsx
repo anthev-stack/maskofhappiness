@@ -45,20 +45,24 @@ export function PlaylistSidebar({
   layout = "sidebar",
   title = "Listen with us",
   blurb = "The brand is built around sharing and listening. These are the playlists we are on right now.",
+  showHeading = true,
 }: {
   playlists: Playlist[];
   layout?: "sidebar" | "grid";
   title?: string;
   blurb?: string;
+  showHeading?: boolean;
 }) {
   const isGrid = layout === "grid";
 
   return (
     <aside id="listen" className="space-y-3">
-      <div>
-        <h2 className="text-lg font-bold text-[var(--heading)]">{title}</h2>
-        {blurb ? <p className="mt-1 text-sm text-[var(--muted)]">{blurb}</p> : null}
-      </div>
+      {showHeading ? (
+        <div>
+          <h2 className="text-lg font-bold text-[var(--heading)]">{title}</h2>
+          {blurb ? <p className="mt-1 text-sm text-[var(--muted)]">{blurb}</p> : null}
+        </div>
+      ) : null}
       {playlists.length === 0 ? (
         <div className="rounded-2xl bg-[var(--surface-2)] p-4 text-sm text-[var(--muted)] ring-1 ring-[var(--border)]">
           Playlists will land here soon.

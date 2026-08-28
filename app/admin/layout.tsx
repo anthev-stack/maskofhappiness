@@ -21,7 +21,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="mx-auto max-w-[1400px] px-4 py-8">
-      <h1 className="text-3xl font-extrabold text-[var(--heading)]">Dashboard</h1>
+      <h1 className="text-3xl font-extrabold uppercase text-[var(--heading)]">Dashboard</h1>
       <p className="mt-1 text-sm">Create events, manage playlists, and review ticket orders.</p>
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <Stat href="/admin/events" label="Events" value={events} />

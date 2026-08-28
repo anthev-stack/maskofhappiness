@@ -40,7 +40,7 @@ export function AccountForm({ name, email }: { name: string; email: string }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4 rounded-2xl bg-[var(--surface-2)] p-6 ring-1 ring-[var(--border)]">
-      <h1 className="text-2xl font-bold text-[var(--heading)]">Account</h1>
+      <h1 className="text-2xl font-bold uppercase text-[var(--heading)]">Account</h1>
       <div>
         <label htmlFor="name">Username</label>
         <input id="name" name="name" defaultValue={name} required minLength={2} />

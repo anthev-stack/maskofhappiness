@@ -1,4 +1,5 @@
 import { EventRow, toEventCard } from "@/components/event-row";
+import { EventSection, PreviousEvents } from "@/components/event-list";
 import { PlaylistSidebar } from "@/components/playlist-sidebar";
 import { ShopGrid } from "@/components/shop-grid";
 import { prisma } from "@/lib/prisma";
@@ -94,59 +95,5 @@ export default async function Home() {
         </div>
       )}
     </div>
-  );
-}
-
-function EventSection({
-  title,
-  count,
-  children,
-}: {
-  title: string;
-  count: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <section>
-      <div className="mb-3 flex items-end justify-between">
-        <h2 className="text-xl font-bold text-[var(--heading)]">{title}</h2>
-        <span className="text-sm text-[var(--muted)]">{count}</span>
-      </div>
-      <div className="space-y-3">{children}</div>
-    </section>
-  );
-}
-
-function PreviousEvents({
-  previous,
-  isAdmin = false,
-}: {
-  previous: Array<{
-    id: string;
-    slug: string;
-    title: string;
-    description: string;
-    location: string;
-    startsAt: Date;
-    priceCents: number;
-    currency: string;
-    capacity: number | null;
-    accessCodeEnabled?: boolean;
-    _count?: { orders: number };
-  }>;
-  isAdmin?: boolean;
-}) {
-  return (
-    <EventSection title="Previous events" count={previous.length}>
-      {previous.length === 0 ? (
-        <p className="rounded-2xl bg-[var(--surface-2)] p-6 text-sm text-[var(--muted)] ring-1 ring-[var(--border)]">
-          Archive is empty for now.
-        </p>
-      ) : (
-        previous.map((event) => (
-          <EventRow key={event.id} event={toEventCard(event)} past isAdmin={isAdmin} />
-        ))
-      )}
-    </EventSection>
   );
 }

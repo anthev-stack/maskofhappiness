@@ -2,7 +2,7 @@ import Link from "next/link";
 import { formatEventDate, formatMoney } from "@/lib/utils";
 import { ticketStockLabel } from "@/lib/tickets";
 
-type EventCard = {
+export type EventCard = {
   id: string;
   slug: string;
   title: string;
