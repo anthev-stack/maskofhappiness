@@ -74,6 +74,14 @@ model Setting {
   logoOverlayUppercase  Boolean @default(false)
   logoOverlayColor      String  @default("#b0bac5")
   homepageProductIds    String  @default("[]")
+  seoTitle              String  @default("maskofhappiness")
+  seoDescription        String  @default("Community events and shared listening from maskofhappiness.")
+  seoKeywords           String  @default("")
+  ogImageUrl            String?
+  faviconUrl            String?
+  appleIconUrl          String?
+  themeColor            String  @default("#080808")
+  appleAppTitle         String  @default("maskofhappiness")
 }
 
 model Product {

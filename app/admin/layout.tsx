@@ -33,6 +33,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <nav className="mt-6 flex flex-wrap gap-2">
         <Tab href="/admin">Overview</Tab>
         <Tab href="/admin/homepage">Homepage</Tab>
+        <Tab href="/admin/site">Site settings</Tab>
         <Tab href="/admin/events">Events</Tab>
         <Tab href="/admin/playlists">Playlists</Tab>
         <Tab href="/admin/shop">Shop</Tab>
