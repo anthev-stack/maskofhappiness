@@ -48,7 +48,7 @@ export function ProductDetail({
 
   function onAdd() {
     if (soldOut) return;
-    addToCart(cartPayload(), qty);
+    addToCart(cartPayload(), qty, true);
   }
 
   function onBuy() {

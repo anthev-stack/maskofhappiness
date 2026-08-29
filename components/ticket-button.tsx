@@ -55,7 +55,7 @@ export function TicketButton({
 
   function onAdd() {
     if (!canAdd()) return;
-    addToCart(payload(), qty);
+    addToCart(payload(), qty, true);
   }
 
   function onBuy() {

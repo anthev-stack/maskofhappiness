@@ -71,7 +71,7 @@ export function writeCart(items: CartItem[]) {
   window.dispatchEvent(new Event("moh-cart"));
 }
 
-export function addToCart(item: Omit<CartItem, "quantity">, quantity: number) {
+export function addToCart(item: Omit<CartItem, "quantity">, quantity: number, toast = false) {
   const items = readCart();
   const index = items.findIndex((row) => sameLine(row, item));
   if (index >= 0) {
@@ -83,6 +83,7 @@ export function addToCart(item: Omit<CartItem, "quantity">, quantity: number) {
     items.push({ ...item, quantity });
   }
   writeCart(items);
+  if (toast) window.dispatchEvent(new Event("moh-cart-added"));
 }
 
 export function setCartQty(item: Pick<CartItem, "kind" | "id" | "variantName">, quantity: number) {
