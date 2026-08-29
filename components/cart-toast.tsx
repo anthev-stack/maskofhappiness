@@ -3,14 +3,16 @@
 import { useEffect, useState } from "react";
 
 export function CartToast() {
-  const [show, setShow] = useState(false);
+  const [spot, setSpot] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     let hide: number;
-    function onAdd() {
+    function onAdd(event: Event) {
+      const detail = (event as CustomEvent<{ x: number; y: number }>).detail;
+      if (!detail) return;
       window.clearTimeout(hide);
-      setShow(true);
-      hide = window.setTimeout(() => setShow(false), 1800);
+      setSpot(detail);
+      hide = window.setTimeout(() => setSpot(null), 1600);
     }
     window.addEventListener("moh-cart-added", onAdd);
     return () => {
@@ -19,12 +21,13 @@ export function CartToast() {
     };
   }, []);
 
-  if (!show) return null;
+  if (!spot) return null;
 
   return (
     <div
       role="status"
-      className="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-[var(--heading)] px-4 py-2 text-xs font-bold uppercase tracking-wide text-[var(--bg)] shadow-lg"
+      className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-full rounded-full bg-[var(--heading)] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-[var(--bg)] shadow-lg"
+      style={{ left: spot.x, top: spot.y - 10 }}
     >
       Added to cart!
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { addToCart } from "@/lib/cart";
@@ -53,9 +53,9 @@ export function TicketButton({
     return !soldOut && (!requiresAccessCode || accessCode.length === 6);
   }
 
-  function onAdd() {
+  function onAdd(event: MouseEvent<HTMLButtonElement>) {
     if (!canAdd()) return;
-    addToCart(payload(), qty, true);
+    addToCart(payload(), qty, { x: event.clientX, y: event.clientY });
   }
 
   function onBuy() {

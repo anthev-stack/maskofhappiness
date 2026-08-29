@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
@@ -46,9 +46,9 @@ export function ProductDetail({
     };
   }
 
-  function onAdd() {
+  function onAdd(event: MouseEvent<HTMLButtonElement>) {
     if (soldOut) return;
-    addToCart(cartPayload(), qty, true);
+    addToCart(cartPayload(), qty, { x: event.clientX, y: event.clientY });
   }
 
   function onBuy() {
